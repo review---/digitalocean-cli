@@ -18,13 +18,21 @@ version DigitalOcean::VERSION
 subcommand_option_handling :normal
 arguments :strict
 
-desc 'Describe some switch here'
-switch [:s,:switch]
+desc 'Login to DigitalOcean using a token'
+arg_name '<token>'
+command :login do |c|
+  c.action do |global_options,options,args|
+    raise "Missing token" if args.length != 1
+    DigitalOcean::Settings.new.save_token(args[0])
+  end
+end
 
-desc 'Describe some flag here'
-default_value 'the default'
-arg_name 'The name of the argument'
-flag [:f,:flagname]
+desc 'Logout from DigitalOcean'
+command :logout do |c|
+  c.action do |global_options,options,args|
+    DigitalOcean::Settings.new.delete_token
+  end
+end
 
 pre do |global,command,options,args|
   # Pre logic here
