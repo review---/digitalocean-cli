@@ -2,7 +2,9 @@ PATH
   remote: .
   specs:
     digitalocean-cli (0.0.1)
+      excon
       gli (= 2.12.2)
+      json
 
 GEM
   remote: https://rubygems.org/
@@ -21,6 +23,7 @@ GEM
       multi_json (>= 1.7.5, < 2.0)
       multi_test (>= 0.1.1)
     diff-lcs (1.2.5)
+    excon (0.40.0)
     ffi (1.9.6)
     gherkin (2.12.2)
       multi_json (~> 1.3)
