@@ -33,10 +33,11 @@ digitalocean logout
 
 ## Droplet management
 
-Create a droplet named name
+Create a droplet named name using a cloud-config file
+for customization
 
 ```
-digitalocean droplet create <name>
+digitalocean droplet create <name> <cloud-config.yaml>
 ```
 
 List all droplets
