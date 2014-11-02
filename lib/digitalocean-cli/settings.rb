@@ -19,7 +19,7 @@ module DigitalOcean
 
     def load_token
       return nil unless File.file?(@token_file)
-      user_name = File.read(@token_file)
+      File.read(@token_file)
     end
 
     def delete_token
