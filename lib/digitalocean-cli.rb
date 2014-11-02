@@ -1,4 +1,5 @@
 require 'digitalocean-cli/api.rb'
+require 'digitalocean-cli/droplet.rb'
 require 'digitalocean-cli/settings.rb'
 require 'digitalocean-cli/version.rb'
 
