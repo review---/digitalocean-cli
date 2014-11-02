@@ -31,6 +31,7 @@ end
 desc 'Logout from DigitalOcean'
 command :logout do |c|
   c.action do |global_options,options,args|
+    ensureLoggedIn
     DigitalOcean::Settings.new.delete_token
   end
 end
@@ -41,6 +42,7 @@ command :droplet do |c|
   c.arg_name '<name>'
   c.command :create do |cc|
     cc.action do |global_options,options,args|
+      ensureLoggedIn
       raise "Missing droplet name" if args.length != 1
       DigitalOcean::Droplet.new(:name => args[0])
     end
@@ -48,6 +50,7 @@ command :droplet do |c|
   c.desc 'List droplets'
   c.command :list do |cc|
     cc.action do |global_options,options,args|
+      ensureLoggedIn
       DigitalOcean::Droplet.each do |d|
         puts "#{d.name}: #{d.status}"
       end
@@ -57,6 +60,7 @@ command :droplet do |c|
   c.arg_name '<name>'
   c.command :destroy do |cc|
     cc.action do |global_options,options,args|
+      ensureLoggedIn
       raise "Missing droplet name" if args.length != 1
       DigitalOcean::Droplet.each do |d|
         d.destroy if d.name == args[0]

@@ -7,6 +7,14 @@ module DigitalOcean
       $global_client
     end
 
+    def loggedIn?
+      not DigitalOcean::Settings.new.load_token.nil?
+    end
+
+    def ensureLoggedIn
+      raise 'Not logged in' unless loggedIn?
+    end
+
   end
 
 end
