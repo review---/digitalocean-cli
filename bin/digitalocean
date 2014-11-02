@@ -39,12 +39,12 @@ end
 desc 'Inspect and manipulate droplets'
 command :droplet do |c|
   c.desc 'Create a new droplet'
-  c.arg_name '<name>'
+  c.arg_name '<name> <cloud-config.yaml>'
   c.command :create do |cc|
     cc.action do |global_options,options,args|
       ensureLoggedIn
-      raise "Missing droplet name" if args.length != 1
-      DigitalOcean::Droplet.new(:name => args[0])
+      raise "Missing droplet name" if args.length != 2
+      DigitalOcean::Droplet.new(:name => args[0], :cloudconfig => IO.read(args[1]))
     end
   end
   c.desc 'List droplets'
