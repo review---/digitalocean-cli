@@ -1,4 +1,4 @@
-require 'digitalocean-cli'
+require 'spec_helper'
 
 module DigitalOcean
   describe Settings do

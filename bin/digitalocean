@@ -10,6 +10,7 @@ rescue LoadError
 end
 
 include GLI::App
+include DigitalOcean::API
 
 program_desc 'Describe your application here'
 
@@ -34,12 +35,38 @@ command :logout do |c|
   end
 end
 
+desc 'Inspect and manipulate droplets'
+command :droplet do |c|
+  c.desc 'Create a new droplet'
+  c.arg_name '<name>'
+  c.command :create do |cc|
+    cc.action do |global_options,options,args|
+      raise "Missing droplet name" if args.length != 1
+      DigitalOcean::Droplet.new(:name => args[0])
+    end
+  end
+  c.desc 'List droplets'
+  c.command :list do |cc|
+    cc.action do |global_options,options,args|
+      DigitalOcean::Droplet.each do |d|
+        puts "#{d.name}: #{d.status}"
+      end
+    end
+  end
+  c.desc 'Destroy a droplet'
+  c.arg_name '<name>'
+  c.command :destroy do |cc|
+    cc.action do |global_options,options,args|
+      raise "Missing droplet name" if args.length != 1
+      DigitalOcean::Droplet.each do |d|
+        d.destroy if d.name == args[0]
+      end
+    end
+  end
+end
+
 pre do |global,command,options,args|
-  # Pre logic here
-  # Return true to proceed; false to abort and not call the
-  # chosen command
-  # Use skips_pre before a command to skip this block
-  # on that command only
+  $global_client = DigitalOcean::Client.new(Excon.new(base_url), DigitalOcean::Settings.new.load_token)
   true
 end
 
