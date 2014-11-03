@@ -14,7 +14,6 @@ module DigitalOcean
       @name = params[:name] || params['name']
       @cloudconfig = params[:cloudconfig]
       @status = params[:status] || params['status'] || 'unknown'
-      @ipaddress_v4 = params['networks']['v4'][0]['ip_address']
       @id = params[:id] || params['id']
       if @id.nil?
         data = '{"name":"'+@name+'","region":"ams3","size":"512mb","image":7111572,"user_data":"'+@cloudconfig+'"}'
