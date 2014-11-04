@@ -10,15 +10,21 @@ module DigitalOcean
     end
 
     def initialize(params)
-      raise 'Missing droplet name' if params[:name].nil? && params['name'].nil?
-      @name = params[:name] || params['name']
-      @cloudconfig = params[:cloudconfig]
-      @status = params[:status] || params['status'] || 'unknown'
       @id = params[:id] || params['id']
       if @id.nil?
-        data = '{"name":"'+@name+'","region":"ams3","size":"512mb","image":7111572,"user_data":"'+@cloudconfig+'"}'
-        res = client.post(droplets, data)
+        raise 'Missing droplet name' if params[:name].nil?
+        @name = params[:name]
+        res = client.post(droplets, { :name => @name,
+                                      :region => 'ams3',
+                                      :size => '512mb',
+                                      :image => 7111572,
+                                      :user_data => params[:cloudconfig]
+                                    }.to_json)
         @id = res['droplet']['id']
+        @status = res['droplet']['status']
+      else
+        @name = params['name']
+        @status = params['status']
       end
     end
 
