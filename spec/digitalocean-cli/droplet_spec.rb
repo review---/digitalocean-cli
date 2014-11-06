@@ -5,6 +5,16 @@ module DigitalOcean
   describe Droplet do
     before do
       Excon.stubs.clear
+      @droplet = {
+        :droplet => {:id => 42}
+      }.to_json
+      @droplets = {
+        :droplets => [
+          {:name => 'd0', :id => 0},
+          {:name => 'd1', :id => 1},
+          {:name => 'd2', :id => 2}
+          ]
+        }.to_json
     end
     describe 'initialization' do
       it 'should require a name' do
@@ -13,7 +23,7 @@ module DigitalOcean
       it 'should set the passed name' do
         Excon.stub(
           { :method => :post, :path => droplets },
-          { :status => 202 , :body => '{"droplet":{"id":42}}' })
+          { :status => 202 , :body => @droplet })
 
         d = Droplet.new(:name => 'foo')
         expect(d.name).to eq('foo')
@@ -24,7 +34,7 @@ module DigitalOcean
       it 'should contain 3 items' do
         Excon.stub(
           { :method => :get, :path => droplets },
-          { :status => 200 , :body => '{"droplets":[{"name":"d0","id":0},{"name":"d1","id":1},{"name":"d2","id":2}]}' })
+          { :status => 200 , :body => @droplets })
 
         Droplet.each_with_index do |d,i|
           expect(d.name).to eq("d#{i}")
@@ -36,7 +46,7 @@ module DigitalOcean
       it 'should set the passed name' do
         Excon.stub(
           { :method => :post, :path => droplets },
-          { :status => 202 , :body => '{"droplet":{"id":42}}' })
+          { :status => 202 , :body => @droplet })
         Excon.stub(
           { :method => :delete, :path => droplets+'/42'},
           { :status => 204 })
