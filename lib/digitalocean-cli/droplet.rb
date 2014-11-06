@@ -2,9 +2,12 @@ module DigitalOcean
 
   class Droplet
 
+    def self.all
+      client.get(droplets)['droplets'].map{ |d| Droplet.new(d) }
+    end
+
     def self.each
-      body = client.get(droplets)
-      body['droplets'].map{ |d| DigitalOcean::Droplet.new(d) }.each do |d|
+      all.each do |d|
         yield d
       end
     end
