@@ -12,6 +12,12 @@ module DigitalOcean
       end
     end
 
+    def self.each_with_index
+      all.each_with_index do |d,i|
+        yield d,i
+      end
+    end
+
     def initialize(params)
       @id = params[:id] || params['id']
       if @id.nil?

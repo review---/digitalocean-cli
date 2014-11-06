@@ -24,13 +24,11 @@ module DigitalOcean
       it 'should contain 3 items' do
         Excon.stub(
           { :method => :get, :path => droplets },
-          { :status => 200 , :body => '{"droplets":[{"name":"d1","id":1},{"name":"d2","id":2},{"name":"d3","id":3}]}' })
+          { :status => 200 , :body => '{"droplets":[{"name":"d0","id":0},{"name":"d1","id":1},{"name":"d2","id":2}]}' })
 
-        c = 0
-        Droplet.each do |d|
-          c += 1
-          expect(d.name).to eq("d#{c}")
-          expect(d.id).to eq(c)
+        Droplet.each_with_index do |d,i|
+          expect(d.name).to eq("d#{i}")
+          expect(d.id).to eq(i)
         end
       end
     end
