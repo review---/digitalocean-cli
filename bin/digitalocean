@@ -47,15 +47,6 @@ command :droplet do |c|
       DigitalOcean::Droplet.new(:name => args[0], :cloudconfig => IO.read(args[1]))
     end
   end
-  c.desc 'List droplets'
-  c.command :list do |cc|
-    cc.action do |global_options,options,args|
-      ensureLoggedIn
-      DigitalOcean::Droplet.each do |d|
-        puts "#{d.name}: #{d.status}"
-      end
-    end
-  end
   c.desc 'Destroy a droplet'
   c.arg_name '<name>'
   c.command :destroy do |cc|
@@ -64,6 +55,15 @@ command :droplet do |c|
       raise "Missing droplet name" if args.length != 1
       DigitalOcean::Droplet.each do |d|
         d.destroy if d.name == args[0]
+      end
+    end
+  end
+  c.desc 'List droplets'
+  c.command :list do |cc|
+    cc.action do |global_options,options,args|
+      ensureLoggedIn
+      DigitalOcean::Droplet.each do |d|
+        puts "#{d.name}: #{d.status}"
       end
     end
   end
