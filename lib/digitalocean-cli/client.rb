@@ -16,7 +16,7 @@ module DigitalOcean
       return parse(res)
     end
 
-    def post(path, data, expects=[202])
+    def post(path, data, expects=[201,202])
       res = @connection.post( :expects => expects,
                               :path => path,
                               :headers => {

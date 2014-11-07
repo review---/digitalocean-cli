@@ -67,6 +67,28 @@ command :droplet do |c|
       end
     end
   end
+  c.desc 'Power off a droplet'
+  c.arg_name '<name>'
+  c.command :poweroff do |cc|
+    cc.action do |global_options,options,args|
+      ensureLoggedIn
+      raise "Missing droplet name" if args.length != 1
+      DigitalOcean::Droplet.each do |d|
+        d.power_off if d.name == args[0]
+      end
+    end
+  end
+  c.desc 'Power on a droplet'
+  c.arg_name '<name>'
+  c.command :poweron do |cc|
+    cc.action do |global_options,options,args|
+      ensureLoggedIn
+      raise "Missing droplet name" if args.length != 1
+      DigitalOcean::Droplet.each do |d|
+        d.power_on if d.name == args[0]
+      end
+    end
+  end
 end
 
 pre do |global,command,options,args|

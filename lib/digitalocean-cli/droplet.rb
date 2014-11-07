@@ -49,6 +49,14 @@ module DigitalOcean
       @status
     end
 
+    def power_on
+      client.post(droplet_actions(@id), {:type => 'power_on'}.to_json)
+    end
+
+    def power_off
+      client.post(droplet_actions(@id), {:type => 'power_off'}.to_json)
+    end
+
     def destroy
       client.delete("#{droplets}/#{@id}")
     end
