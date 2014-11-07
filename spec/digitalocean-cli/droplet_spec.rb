@@ -65,6 +65,17 @@ module DigitalOcean
         d = Droplet.new(:name => 'foo')
         d.power_off
       end
+      it 'should reboot' do
+        Excon.stub(
+          { :method => :post, :path => droplets },
+          { :status => 202 , :body => @droplet })
+        Excon.stub(
+          { :method => :post, :path => droplet_actions(42), :body => {:type => 'reboot'}.to_json },
+          { :status => 201 })
+
+        d = Droplet.new(:name => 'foo')
+        d.reboot
+      end
     end
     describe 'destruction' do
       it 'should set the passed name' do

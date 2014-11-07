@@ -89,6 +89,17 @@ command :droplet do |c|
       end
     end
   end
+  c.desc 'Reboot a droplet'
+  c.arg_name '<name>'
+  c.command :reboot do |cc|
+    cc.action do |global_options,options,args|
+      ensureLoggedIn
+      raise "Missing droplet name" if args.length != 1
+      DigitalOcean::Droplet.each do |d|
+        d.reboot if d.name == args[0]
+      end
+    end
+  end
 end
 
 pre do |global,command,options,args|

@@ -57,6 +57,10 @@ module DigitalOcean
       client.post(droplet_actions(@id), {:type => 'power_off'}.to_json)
     end
 
+    def reboot
+      client.post(droplet_actions(@id), {:type => 'reboot'}.to_json)
+    end
+
     def destroy
       client.delete("#{droplets}/#{@id}")
     end
