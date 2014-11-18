@@ -6,6 +6,9 @@ module DigitalOcean
     # Droplet
     def droplets() '/v2/droplets' end
     def droplet_actions(droplet_id) "/v2/droplets/#{droplet_id}/actions" end
+
+    # Image
+    def images() '/v2/images' end
   end
 
 end

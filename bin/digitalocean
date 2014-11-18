@@ -102,6 +102,19 @@ command :droplet do |c|
   end
 end
 
+desc 'Inspect images'
+command :image do |c|
+  c.desc 'List images'
+  c.command :list do |cc|
+    cc.action do |global_options,options,args|
+      ensureLoggedIn
+      DigitalOcean::Image.each do |i|
+        puts "#{i.distribution} #{i.name} (#{i.slug})"
+      end
+    end
+  end
+end
+
 pre do |global,command,options,args|
   $global_client = DigitalOcean::Client.new(Excon.new(base_url), DigitalOcean::Settings.new.load_token)
   true
