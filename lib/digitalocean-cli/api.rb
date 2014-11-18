@@ -9,6 +9,9 @@ module DigitalOcean
 
     # Image
     def images() '/v2/images' end
+
+    # Region
+    def regions() '/v2/regions' end
   end
 
 end

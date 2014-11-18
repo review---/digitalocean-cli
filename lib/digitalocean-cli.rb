@@ -3,6 +3,7 @@ require 'digitalocean-cli/client.rb'
 require 'digitalocean-cli/droplet.rb'
 require 'digitalocean-cli/global.rb'
 require 'digitalocean-cli/image.rb'
+require 'digitalocean-cli/region.rb'
 require 'digitalocean-cli/settings.rb'
 require 'digitalocean-cli/version.rb'
 

@@ -115,6 +115,19 @@ command :image do |c|
   end
 end
 
+desc 'Inspect regions'
+command :region do |c|
+  c.desc 'List available regions'
+  c.command :list do |cc|
+    cc.action do |global_options,options,args|
+      ensureLoggedIn
+      DigitalOcean::Region.each do |r|
+        puts "#{r.name} (#{r.slug})"
+      end
+    end
+  end
+end
+
 pre do |global,command,options,args|
   $global_client = DigitalOcean::Client.new(Excon.new(base_url), DigitalOcean::Settings.new.load_token)
   true
