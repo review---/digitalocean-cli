@@ -6,7 +6,7 @@ require 'digitalocean-cli'
 include GLI::App
 include DigitalOcean::API
 
-program_desc 'Describe your application here'
+program_desc 'Command line interface for the DigitalOcean API v2'
 
 version DigitalOcean::VERSION
 
