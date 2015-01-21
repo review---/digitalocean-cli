@@ -103,8 +103,11 @@ command :image do |c|
     cc.action do |global_options,options,args|
       ensureLoggedIn
       DigitalOcean::Image.each do |i|
-        puts "#{i.distribution} #{i.name} (#{i.slug})"
+        puts ""
+        puts "Distribution: #{i.distribution} #{i.name}"
+        puts "Slug: #{i.slug}"
       end
+      puts ""
     end
   end
 end
