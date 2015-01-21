@@ -116,8 +116,11 @@ command :region do |c|
     cc.action do |global_options,options,args|
       ensureLoggedIn
       DigitalOcean::Region.each do |r|
-        puts "#{r.name} (#{r.slug})"
+        puts ""
+        puts "Name: #{r.name}"
+        puts "Slug: #{r.slug}"
       end
+      puts ""
     end
   end
 end
