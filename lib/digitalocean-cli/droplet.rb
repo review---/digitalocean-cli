@@ -24,10 +24,9 @@ module DigitalOcean
         raise 'Missing droplet name' if params[:name].nil?
         @name = params[:name]
         res = client.post(droplets, { :name => @name,
-                                      :region => 'ams3',
-                                      :size => '512mb',
-                                      :image => 7111572,
-                                      :user_data => params[:cloudconfig]
+                                      :region => params[:region],
+                                      :size => params[:size],
+                                      :image => params[:image]
                                     }.to_json)
         @id = res['droplet']['id']
         @status = res['droplet']['status']

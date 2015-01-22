@@ -33,12 +33,19 @@ end
 desc 'Inspect and manipulate droplets'
 command :droplet do |c|
   c.desc 'Create a new droplet'
-  c.arg_name '<name> <cloud-config.yaml>'
+  c.arg_name '<name>'
   c.command :create do |cc|
+    cc.desc 'Specify the region for the droplet'
+    cc.flag [:r,:region], :default_value => 'ams3'
+    cc.desc 'Specify the size for the droplet'
+    cc.flag [:s,:size], :default_value => '512mb'
+    cc.desc 'Specify the image for the droplet'
+    cc.flag [:i,:image], :default_value => 'ubuntu-12-04-x64'
     cc.action do |global_options,options,args|
       ensureLoggedIn
-      raise "Missing droplet name" if args.length != 2
-      DigitalOcean::Droplet.new(:name => args[0], :cloudconfig => IO.read(args[1]))
+      raise "Missing droplet name" if args.length != 1
+      options[:name] = args[0]
+      DigitalOcean::Droplet.new(options)
     end
   end
   c.desc 'Destroy a droplet'
@@ -57,8 +64,11 @@ command :droplet do |c|
     cc.action do |global_options,options,args|
       ensureLoggedIn
       DigitalOcean::Droplet.each do |d|
-        puts "#{d.name}: #{d.status}"
+        puts ""
+        puts "Name: #{d.name}"
+        puts "Status: #{d.status}"
       end
+      puts ""
     end
   end
   c.desc 'Power off a droplet'
