@@ -6,9 +6,10 @@ spec = Gem::Specification.new do |s|
   s.version = DigitalOcean::VERSION
   s.author = 'Fabian M. Borschel'
   s.email = 'fmb@mailbox.org'
+  s.description = 'A command line client for the DigitalOcean APIv2'
   s.homepage = 'http://github.com/onibox/digitalocean-cli'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'A command line client for the DigitalOcean API'
+  s.summary = 'A command line client for the DigitalOcean APIv2'
   s.files = `git ls-files`.split("
 ")
   s.require_paths << 'lib'
